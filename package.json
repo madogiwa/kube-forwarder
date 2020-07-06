@@ -15,6 +15,7 @@
     "build:web": "cross-env BUILD_TARGET=web node .electron-vue/build.js",
     "upload": "./upload.sh",
     "release": "RELEASE=true npm run build -- -- -p always --mac --linux --win",
+    "notarize": "node scripts/notarize.js",
     "dev": "BUILD=DEV-VERSION node .electron-vue/dev-runner.js",
     "web": "BUILD=WEB-VERSION node .electron-vue/web-runner.js",
     "e2e": "npm run pack && mocha test/e2e",
@@ -66,7 +67,12 @@
       "owner": "pixel-point",
       "repo": "kube-forwarder"
     },
+    "afterSign": "scripts/notarize.js",
     "mac": {
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "scripts/entitlements.mac.plist",
+      "entitlementsInherit": "scripts/entitlements.mac.plist",
       "target": [
         "dmg",
         "zip"
@@ -128,6 +134,7 @@
     "electron-builder": "22.7.0",
     "electron-debug": "^3.0.0",
     "electron-devtools-installer": "^2.2.4",
+    "electron-notarize": "^1.0.0",
     "eslint": "^5.16.0",
     "eslint-config-standard": "^12.0.0",
     "eslint-friendly-formatter": "^4.0.1",
