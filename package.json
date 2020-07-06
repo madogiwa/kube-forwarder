@@ -74,8 +74,7 @@
       "entitlements": "scripts/entitlements.mac.plist",
       "entitlementsInherit": "scripts/entitlements.mac.plist",
       "target": [
-        "dmg",
-        "zip"
+        "dmg"
       ]
     },
     "win": {
