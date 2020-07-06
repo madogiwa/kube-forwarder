@@ -122,26 +122,7 @@ async function startForward(commit, k8sForward, service, target) {
     })
   })
 
-  resultPromise.then(result => result.success && updateFlags(commit, service, target))
-
   return resultPromise
-}
-
-function updateFlags(commit, service, target) {
-  return updateHttpFlag(commit, service, target)
-}
-
-async function updateHttpFlag(commit, service, target) {
-  const controller = new AbortController()
-  setTimeout(() => controller.abort(), 5000)
-
-  try {
-    const localAddress = service.localAddress || 'localhost'
-    await fetch(
-      `http://${localAddress}:${target.localPort}`,
-      { signal: controller.signal, method: 'OPTIONS' })
-    commit('SET_FLAG', { address: localAddress, port: target.localPort, flagName: 'http', flagValue: true })
-  } catch (e) {}
 }
 
 function prepareK8sToolsWithCluster(cluster) {
