@@ -44,14 +44,14 @@
       </ControlGroup>
 
       <ControlGroup label="">
-        <BaseCheckbox :value="attributes.localAddress != null"
+        <BaseCheckbox :value="attributes.useCustomLocalAddress"
                       @input="toggleCustomLocalAddress"
         >
           Use custom local address
         </BaseCheckbox>
       </ControlGroup>
 
-      <ControlGroup v-if="attributes.localAddress != null" label="">
+      <ControlGroup v-if="attributes.useCustomLocalAddress" label="">
         <BaseInput v-model="$v.attributes.localAddress.$model"
                    placeholder="localhost"
         />
@@ -186,7 +186,8 @@ export default {
         workloadType: null,
         workloadName: '',
         forwards: [],
-        localAddress: null
+        useCustomLocalAddress: false,
+        localAddress: ''
       }
     },
     async handleNamespaceFocus() {
@@ -249,7 +250,8 @@ export default {
       })
     },
     toggleCustomLocalAddress() {
-      this.attributes.localAddress = this.attributes.localAddress == null ? '' : null
+      this.attributes.useCustomLocalAddress = !this.attributes.useCustomLocalAddress;
+      this.attributes.localAddress = this.attributes.useCustomAddress ? 'localhost' : ''
     }
   }
 }
